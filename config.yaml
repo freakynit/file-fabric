@@ -1,0 +1,110 @@
+outputDir: output
+
+json:
+  - path: output/custom.json
+    pretty: true
+    data:
+      company: MyStartup
+      active: true
+
+pdf:
+  - path: output/sample.pdf
+    title: Demo Document
+    fontSize: 16
+    lines: 10
+    texts: ["This is line 1", "This is line 2"]
+
+txt:
+  - path: output/sample.txt
+    lines: 5
+    texts: ["This is line 1", "This is line 2"]
+
+docx:
+  - path: output/sample.docx
+    lines: 10
+    texts: ["This is line 1", "This is line 2"]
+
+pptx:
+  - path: output/sample.pptx
+    slides:
+      Intro:
+        lines: 3
+        texts: ["Welcome", "Agenda", "Notes"]
+      Team:
+        lines: 4
+      Summary:
+        lines: 5
+        texts: ["Point A", "Point B"]
+
+xlsx:
+  - path: output/sample.xlsx
+    sheets:
+      Employees:
+        rows: 5
+      CustomData:
+        rows: 6
+        texts:
+          - ["Alice", "alice@example.com"]
+          - ["Bob", "bob@example.com"]
+
+csv:
+  - path: output/sample.csv
+    data:
+      - { name: "Alice", email: "alice@example.com" }
+      - { name: "Bob",   email: "bob@example.com" }
+
+images:
+  jpg:
+    - path: output/sample.jpg
+  png:
+    - path: output/sample.png
+  custom:
+    - path: output/custom.avif
+      create:
+        width: 640
+        height: 360
+        channels: 3
+        background: { r: 10, g: 20, b: 30 }
+      output:
+        format: avif
+        options: { quality: 50 }
+
+audio:
+  wav:
+    - path: output/sample.wav
+      lengthSeconds: 1
+      opts:
+        sampleRate: 44100
+        bitDepth: 16
+        toneHz: 440
+        amplitude: 0.8
+  mp3:
+    - path: output/sample.mp3
+      lengthSeconds: 2
+      opts:
+        noise: white
+
+video:
+  - path: output/sample.mp4
+    duration: 1
+    resolution: "1280x720"
+    fps: 30
+    background: black
+    crf: 23
+    pixelFormat: yuv420p
+    preset: medium
+    silentAudio: true
+
+archives:
+  zip:
+    - path: output/sample.zip
+      files:
+        - output/custom.json
+        - output/sample.pdf
+  # requires system 'rar' CLI:
+  # rar:
+  #   - path: output/sample.rar
+  #     files:
+  #       - output/custom.json
+  #       - output/sample.pdf
+  #     rarPath: rar

@@ -1,0 +1,38 @@
+{
+  "name": "file-fabric",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev:index": "node --loader ts-node/esm --no-warnings=ExperimentalWarning --experimental-specifier-resolution=node src/index.ts",
+    "dev:yaml": "node --loader ts-node/esm --no-warnings=ExperimentalWarning --experimental-specifier-resolution=node src/generate.ts",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist",
+    "lint": "eslint . --ext .ts"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.0.0",
+    "archiver": "^6.0.2",
+    "csv-writer": "^1.6.0",
+    "docx": "^9.0.1",
+    "exceljs": "^4.4.0",
+    "ffmpeg-static": "^5.2.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "js-yaml": "^4.1.0",
+    "pdfkit": "^0.15.0",
+    "pptxgenjs": "^3.11.0",
+    "sharp": "^0.32.1",
+    "wavefile": "^11.0.0"
+  },
+  "devDependencies": {
+    "@types/archiver": "^6.0.3",
+    "@types/fluent-ffmpeg": "^2.1.27",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.12.7",
+    "@types/pdfkit": "^0.17.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
