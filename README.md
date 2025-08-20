@@ -142,7 +142,7 @@ main().catch(console.error);
 
 - Generate multiple files declaratively via a single YAML config.
 
-- Create a YAML file (e.g., config.yaml, see one in already in this repo) with top-level keys: `json`, `pdf`, `txt`, `docx`, `pptx`, `xlsx`, `csv`, `images`, `audio`, `video`, `archives`. Each section accepts a single object or an array of objects. See examples in this section.
+- Create a YAML file (e.g., [config.yaml](config.yaml), see one in already in this repo) with top-level keys: `json`, `pdf`, `txt`, `docx`, `pptx`, `xlsx`, `csv`, `images`, `audio`, `video`, `archives`. Each section accepts a single object or an array of objects. See examples in this section.
 
 - Run:
   - Directly: `npm run dev:yaml -- config.yaml`
