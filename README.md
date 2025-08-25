@@ -2,6 +2,12 @@
 
 A tiny, pragmatic toolkit written in typescript to generate realistic “dummy” files for demos, tests, CI fixtures, and seeding workflows. It can produce common `document`, `spreadsheet`, `slide`, `image`, `audio`, `video`, and `archive` formats with sensible defaults and optional customization.
 
+File-fabric can be used in three ways:
+- **Library** — import and call generators directly in Node.js/TypeScript
+- **YAML/CLI** — generate multiple files declaratively from a config
+- **Server** — run as a lightweight HTTP service and hit REST endpoints
+
+
 ## Why file-fabric?
 
 When building SaaS prototypes, demos, or automated tests, it’s often useful to quickly generate a variety of file types with predictable contents and sizes. File-fabric gives simple API's and configuration to generate:
@@ -39,7 +45,8 @@ Install dependencies in your project and run your script (see examples below).
 
 Note: Your file paths may differ slightly if transpiled to .js.
 
-## Usage
+## Usage as Library
+> Not yet published as package to npm repository
 
 Here’s a minimal end-to-end example similar to index.ts that writes a variety of files into ./output:
 
@@ -225,6 +232,24 @@ Platform notes
 Example
 
 - Include the sample YAML from above.
+
+## Server mode (REST API)
+
+1. You can also run File-fabric as a small HTTP server and generate files by calling REST endpoints.  
+2. This is handy for demos, remote testing, or embedding in other systems. 
+3. The default port is 3000 and can be overwritten using `PORT` environment variable.
+4. Start the server:
+    - Directly: `npm run dev:server`
+    - Building and then running: `npm run build && node dist/server.js`
+5. Once running (default `http://localhost:3000`), you can call endpoints like:
+    - `POST /api/v1/json` → generate JSON
+    - `POST /api/v1/pdf` → generate PDF
+    - `POST /api/v1/images/jpg` → generate JPG
+    - `POST /api/v1/audio/mp3` → generate MP3
+    - `POST /api/v1/video/mp4` → generate MP4
+    - `POST /api/v1/archives/zip` → generate ZIP
+6. Each endpoint accepts JSON payloads matching the same option shapes as the generators.
+7. 👉 See [CURLS.md](CURLS.md) for complete `curl` examples.
 
 ## API reference
 

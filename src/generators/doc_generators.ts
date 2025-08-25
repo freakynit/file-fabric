@@ -277,7 +277,7 @@ export async function generateCSV(options: CSVOptions): Promise<void> {
   // Build CSV header dynamically
   const header = Object.keys(records[0]).map(key => ({
     id: key,
-    title: key.toUpperCase() + key.slice(1),
+    title: key,
   }));
 
   const writer = createObjectCsvWriter({
