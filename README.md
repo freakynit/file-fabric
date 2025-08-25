@@ -30,7 +30,7 @@ Install dependencies in your project and run your script (see examples below).
 ## Project structure (key files)
 
 - index.ts: Sample script invoking all generators and writing outputs to ./output (see [index.ts](src/index.ts))
-- generate.ts: Runs generations from generation spec yaml (see [Config.yaml](Config.yaml)) 
+- generate.ts: Runs generations from generation spec yaml (see [Config.yaml](config.yaml)) 
 - generators/doc_generators.ts: JSON, PDF, TXT, DOCX, PPTX, XLSX, CSV
 - generators/image_generator.ts: Unified image generator plus JPEG/PNG helpers (sharp)
 - generators/audio_generator.ts: WAV (pure PCM via wavefile) and MP3 (via ffmpeg)
