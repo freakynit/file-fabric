@@ -43,7 +43,7 @@ Note: Your file paths may differ slightly if transpiled to .js.
 
 Here’s a minimal end-to-end example similar to index.ts that writes a variety of files into ./output:
 
-```ts
+```typescript
 import fs from "fs";
 import {
   generateJSON, generatePDF, generateTXT, generateDOCX,
@@ -55,44 +55,59 @@ import { generateJPG, generatePNG } from "./generators/image_generator.js";
 import { generateZIP, /* generateRAR */ } from "./generators/archive_generator.js";
 
 async function main() {
-  fs.mkdirSync("output", { recursive: true });
+  const outputDirectory = 'output';
+  
+  fs.mkdirSync(outputDirectory, { recursive: true });
 
+  // data is optional; if omitted, a simple faker-generated object is written
   await generateJSON({
-    path: "output/custom.json",
+    path: `${outputDirectory}/custom.json`,
     data: { company: "MyStartup", active: true }
   });
 
+  // title, fontSize, and texts are optional.
+  // - If texts is omitted, random lines via faker are inserted.
+  // - lines must be >0 and controls number of text items generated.
+  // Provided `texts` array repeats cyclically until all rows filled.
   await generatePDF({
-    path: "output/sample.pdf",
+    path: `${outputDirectory}/sample.pdf`,
     title: "Demo Document",
     fontSize: 16,
     lines: 10,
     texts: ["This is line 1", "This is line 2"]
   });
 
+  // texts optional; faker fills out lines when missing.
+  // Provided `texts` array repeats cyclically until all rows filled.
   await generateTXT({
-    path: "output/sample.txt",
+    path: `${outputDirectory}/sample.txt`,
     lines: 5,
-    texts: ["This is line 1", "This is line 2"]
+    texts: ["This is line 1", "This is line 2"] // cycles texts if shorter than lines
   });
 
+  // texts optional; faker generates paragraphs if omitted.
+  // Provided `texts` array repeats cyclically until all rows filled.
   await generateDOCX({
-    path: "output/sample.docx",
+    path: `${outputDirectory}/sample.docx`,
     lines: 10,
     texts: ["This is line 1", "This is line 2"]
   });
 
+  // slide texts optional; faker fills where missing.
+  // - Each key is a slide title.
   await generatePPTX({
-    path: "output/sample.pptx",
+    path: `${outputDirectory}/sample.pptx`,
     slides: {
       "Intro": { lines: 3, texts: ["Welcome", "Agenda", "Notes"] },
-      "Team": { lines: 4 },           // faker-generated filler
-      "Summary": { lines: 5, texts: ["Point A", "Point B"] },
+      "Team": { lines: 4 },  // uses faker since `texts` omitted
+      "Summary": { lines: 5, texts: ["Point A", "Point B"] }, // texts cycle if shorter
     },
   });
 
+  // sheet texts optional; faker fills rows when not supplied.
+  // Provided `texts` array repeats cyclically until all rows filled.
   await generateXLSX({
-    path: "output/sample.xlsx",
+    path: `${outputDirectory}/sample.xlsx`,
     sheets: {
       "Employees": { rows: 5 }, // faker-generated rows
       "CustomData": {
@@ -100,36 +115,46 @@ async function main() {
         texts: [
           ["Alice", "alice@example.com"],
           ["Bob", "bob@example.com"],
-        ], // values will loop until rows filled
+        ],
       },
     },
   });
 
+  // rows optional; if no rows/data, defaults to 5 faker entries.
+  // data overrides `rows` if both are provided.
   await generateCSV({
-    path: "output/sample.csv",
+    path: `${outputDirectory}/sample.csv`,
     data: [
       { name: "Alice", email: "alice@example.com" },
       { name: "Bob",   email: "bob@example.com"  },
     ],
   });
 
-  await generateJPG("output/sample.jpg");
-  await generatePNG("output/sample.png");
+  // size and color have sensible defaults (300x200 red/green)
+  await generateJPG(`${outputDirectory}/sample.jpg`);
+  await generatePNG(`${outputDirectory}/sample.png`);
 
-  await generateWAV("output/sample.wav", 1);   // 1s of tone by default
-  await generateMP3("output/sample.mp3", 2);   // 2s MP3 via ffmpeg
+  // lengthSeconds required here; controls duration.
+  // - Tone defaults to 440Hz sine if no opts.
+  await generateWAV(`${outputDirectory}/sample.wav`, 1);   // 1s tone
 
-  await generateMP4("output/sample.mp4");      // 1s 1280x720 black, H.264
+  // same as WAV, but transcoded to MP3 via ffmpeg
+  await generateMP3(`${outputDirectory}/sample.mp3`, 2);   // 2s
 
-  await generateZIP("output/sample.zip", [
-    "output/custom.json",
-    "output/sample.pdf",
+  // all args optional here; defaults to 1s, 1280x720, black bg, H.264
+  await generateMP4(`${outputDirectory}/sample.mp4`);
+
+  // file list required; compresses each by basename
+  await generateZIP(`${outputDirectory}/sample.zip`, [
+    `${outputDirectory}/custom.json`,
+    `${outputDirectory}/sample.pdf`,
   ]);
 
-  // If you have a `rar` CLI installed on your system, you can enable:
-  // await generateRAR("output/sample.rar", [
-  //   "output/custom.json",
-  //   "output/sample.pdf",
+  // If system `rar` is available, enable below.
+  // Otherwise skip safely.
+  // await generateRAR(`${outputDirectory}/sample.rar`, [
+  //   `${outputDirectory}/custom.json`,
+  //   `${outputDirectory}/sample.pdf`,
   // ]);
 
   console.log("All files generated in ./output/");
