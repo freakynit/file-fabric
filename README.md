@@ -60,8 +60,10 @@ async function main() {
   fs.mkdirSync(outputDirectory, { recursive: true });
 
   // data is optional; if omitted, a simple faker-generated object is written
+  // pretty is optional and defaults to true
   await generateJSON({
     path: `${outputDirectory}/custom.json`,
+    pretty: true,
     data: { company: "MyStartup", active: true }
   });
 
